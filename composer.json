@@ -1,0 +1,31 @@
+{
+    "name": "elfeffe/local-login",
+    "description": "Local-only query parameter login helper for Laravel",
+    "keywords": [
+        "elfeffe",
+        "laravel",
+        "local",
+        "login",
+        "middleware"
+    ],
+    "license": "MIT",
+    "require": {
+        "php": "^8.4",
+        "laravel/framework": "^12.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Elfeffe\\LocalLogin\\": "src"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Elfeffe\\LocalLogin\\LocalLoginServiceProvider"
+            ]
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}
+
