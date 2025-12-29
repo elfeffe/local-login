@@ -2,9 +2,9 @@
 
 This package adds a **local-only** “login by URL query parameter” helper.
 
-When enabled, any **GET/HEAD** request containing `logged=<userId>` will:
+When enabled, any **GET/HEAD** request containing `logged` will:
 
-- Authenticate the session as that user ID
+- Authenticate the session as a user
 - Redirect back to the same URL **without** the `logged` parameter
 
 This is handy when debugging apps behind tunnels like Expose/Ngrok (public URL, but still running with `APP_ENV=local` on your machine).
@@ -32,12 +32,25 @@ composer require elfeffe/local-login:^1.0
 
 ## Usage
 
+### Option A (generic): log in by user ID
+
 Append `logged=<userId>` to any URL:
 
 - `https://your-app.test/dashboard?logged=62`
 - `https://your-app.test/dashboard/some/page?tool=adder&logged=62`
 
 The first request will return a redirect to the same URL without `logged`. Follow the redirect and you’ll be authenticated.
+
+### Option B (Filament tenancy): `?logged` (no value)
+
+If you are using **Filament v4 with tenancy**, you can append `?logged` (without a value) to a tenant URL (where the tenant identifier / UUID is present in the route):
+
+- `https://your-app.test/dashboard/<tenant-uuid>/.../import?logged`
+
+In this mode, the middleware extracts the tenant identifier from the route (or the URL), resolves the tenant, and logs you in as:
+
+- `created_by` (or `owner_id` / `user_id`) if present on the tenant model, otherwise
+- the first related tenant user (`$tenant->users()->orderBy('users.id')->first()`) if a `users()` relationship exists.
 
 ## Filament v4 compatibility
 
