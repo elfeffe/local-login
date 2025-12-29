@@ -24,53 +24,11 @@ So even if someone appends `?logged=...` in production/staging, it does nothing.
 - Laravel `^12.0`
 - Optional: Filament v4 (if installed, the middleware is automatically injected into all panels)
 
-## Installation (this repository)
-
-Already wired as a local `path` package in the root `composer.json`:
-
-- `"repositories.local-login"` → `packages/elfeffe/local-login`
-- `"require.elfeffe/local-login": "dev-main"`
-
-Then run:
+## Installation
 
 ```bash
-composer update elfeffe/local-login
+composer require elfeffe/local-login
 ```
-
-## Installation (other Laravel apps)
-
-### Option A — Path repository (recommended for internal projects)
-
-1. Copy this folder into your target project, for example:
-   - `packages/elfeffe/local-login`
-2. Add a `path` repository and require the package in the target project `composer.json`:
-
-```json
-{
-  "repositories": {
-    "local-login": {
-      "type": "path",
-      "url": "packages/elfeffe/local-login",
-      "options": {
-        "symlink": true
-      }
-    }
-  },
-  "require": {
-    "elfeffe/local-login": "dev-main"
-  }
-}
-```
-
-3. Install:
-
-```bash
-composer update elfeffe/local-login
-```
-
-### Option B — VCS repository
-
-If you move this package to its own Git repository, add it as a Composer VCS repository and `composer require elfeffe/local-login`.
 
 ## Usage
 
@@ -91,6 +49,10 @@ When Filament v4 is installed, this package also:
 - Adjusts Laravel’s middleware priority so the login middleware runs **before** auth middleware
 
 This makes `logged=<userId>` work on routes like `/admin/...` and `/dashboard/...`.
+
+## Non-standard middleware stacks (non-Filament)
+
+This package registers the middleware into Laravel’s `web` group. If your application does **not** use the `web` group (or does not start sessions), you must add the middleware to the middleware stack that handles browser requests.
 
 ## Behavior details
 
