@@ -27,7 +27,7 @@ So even if someone appends `?logged=...` in production/staging, it does nothing.
 ## Installation
 
 ```bash
-composer require elfeffe/local-login
+composer require elfeffe/local-login:^1.0
 ```
 
 ## Usage
